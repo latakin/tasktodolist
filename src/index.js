@@ -46,9 +46,10 @@ function populateProjectSelect() {
 
     })
 
-    if (projectList.length > 0) {
-        projectSelect.value = 0;
-    }
+    const defaultOpn = projectSelect.querySelector('option[value="0"]');
+    if (defaultOpn) {
+        projectSelect.value = '0';
+    } 
 }
 
 closeForm.addEventListener('click', () => projectDialog.close());
@@ -83,12 +84,12 @@ submitForm.addEventListener('click', (event) => {
     let text = formData.get('text');
     let priority = formData.get('priority');
     let dueDate = formData.get('dueDate');
-    let projectIndex = parseInt(formData.get('projectSelect'), 10);
-
-    if (projectIndex < 0 || !projectList[projectIndex]) {
-        alert('please select a valid project')
-        return;
-    }
+    let rawProjectSelect = formData.get('projectSelect');
+    let projectIndex = parseInt(rawProjectSelect, 10);
+    if ( isNaN(projectIndex) || projectIndex < 0 ) {
+         alert('please select a valid project')
+       return;
+     }
 
     const selectedProject = projectList[projectIndex];
 
