@@ -1,4 +1,69 @@
 /* styles.css */
 body {
   background-color: rebeccapurple;
+  text-align: center;
+}
+ h2 {
+    color: white;
+    font-weight: 700;
+    font-size: 25px;
+ }
+
+ button {
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding:5px 5px 5px 5px;
+    background-color: rgba(0,0,0, 0.5);
+    color: white;
+ }
+
+ dialog form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+ }
+
+ dialog button {
+    margin-bottom: 10px;
+    color: white;
+    background-color: black;
+    font-weight: 400px;
+ }
+
+ .project {
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+ }
+
+ .projectSelect {
+    margin-left: 10px;
+ }
+
+ .task-list {
+    list-style-type: none;
+    padding: 0;
+ }
+
+.task {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #f9f9f9;
+}
+
+.priority-high {
+    border-left: 4px solid red;
+}
+
+.priority-medium {
+    border-left: 4px solid orange;
+}
+.priority-low {
+    border-left: 4px solid green;
+}
+
+.complete-btn {
+    float: right;
+    margin-left: 10px;
 }
