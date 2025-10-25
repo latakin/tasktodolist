@@ -1,4 +1,117 @@
 import "./styles.css";
-import { greeting } from "./greeting.js";
+import { Todo } from "./todoclass.js";
+import { renderProjects }  from "./updatepage.js";
+import { Project } from "./project.js";
 
-console.log(greeting);
+
+const addButton = document.getElementById('add');
+const dialog = document.querySelector('#taskdialog');
+const cancelForm = document.querySelector('#cancelForm');
+const closeForm = document.querySelector('#closeForm');
+const submitForm = document.querySelector('#submitForm');
+const taskForm = document.querySelector('#taskForm');
+const projectButton= document.querySelector('#projectbutton');
+const projectDialog = document.querySelector('#projectdialog');
+const projectForm = document.querySelector('#projectForm');
+const submitProject = document.querySelector('#submitproject');
+let projectList = [];
+const todoList = [];
+
+
+
+const myProject = new Project("Default Project");
+projectList.push(myProject);
+
+
+projectButton.addEventListener('click', () => projectDialog.showModal());
+
+addButton.addEventListener('click', () => {
+    populateProjectSelect();
+    dialog.showModal();
+
+}
+);
+
+function populateProjectSelect() {
+    const projectSelect = document.querySelector('#projectSelect');
+    if (!projectSelect) return;
+
+    projectSelect.innerHTML = '<option value="">--Select a Project --</option>';
+
+    projectList.forEach((project, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${project.title}`;
+        projectSelect.appendChild(option);
+
+    })
+
+    if (projectList.length > 0) {
+        projectSelect.value = 0;
+    }
+}
+
+closeForm.addEventListener('click', () => projectDialog.close());
+cancelForm.addEventListener('click', () => dialog.close());
+
+submitProject.addEventListener ('click', (event) => {
+    event.preventDefault();
+    let formData = new FormData(projectForm);
+    let title = formData.get('title');
+
+    if (projectForm.checkValidity() ) {
+
+        const newProject = new Project(title);
+        console.log(newProject);
+        projectList.push(newProject);
+        renderProjects(projectList)
+        projectForm.reset();
+        projectDialog.close();
+
+    }  else {
+        projectForm.reportValidity();
+    }
+})
+
+
+
+
+
+submitForm.addEventListener('click', (event) => {
+    event.preventDefault();
+    let formData = new FormData(taskForm);
+    let text = formData.get('text');
+    let priority = formData.get('priority');
+    let dueDate = formData.get('dueDate');
+    let projectIndex = parseInt(formData.get('projectSelect'), 10);
+
+    if (projectIndex < 0 || !projectList[projectIndex]) {
+        alert('please select a valid project')
+        return;
+    }
+
+    const selectedProject = projectList[projectIndex];
+
+    
+    
+    
+    
+    if(taskForm.checkValidity()) {
+    
+         const newTask = new Todo (text, priority, dueDate);
+        console.log(newTask)
+        selectedProject.addProject(newTask);
+        renderProjects(projectList);
+        taskForm.reset();
+        dialog.close();   
+     
+    
+    } else {
+        taskForm.reportValidity();
+    }
+    
+
+
+})
+
+renderProjects(projectList);
