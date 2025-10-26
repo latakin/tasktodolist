@@ -18,6 +18,9 @@
 
   <dialog id="taskdialog">
         <form action="" id="taskForm">
+            <div class="closediv">
+                <button id="cancelForm" type="submit">x</button>
+            </div>
             <textarea name="text" id="text" placeholder="enter your task" required></textarea>
             <label for="">Priority</label>
             <select name="priority" id="priority">
@@ -36,15 +39,18 @@
 
             <button id="submitForm" type="submit">Add</button>
         </form>
-        <button id="cancelForm" type="submit">Cancel</button>
+        
     </dialog>
 
     <dialog id="projectdialog">
         <form action="" id="projectForm">
+            <div class="closediv">
+                <button id="closeForm" type="submit" >x</button>
+            </div>
             <input type="text " name="title" placeholder="enter project title">
             <button id="submitproject">Add</button>
         </form>
-        <button id="closeForm" type="submit" >close</button>
+        
     </dialog>
     
     

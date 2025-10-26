@@ -15,7 +15,7 @@ const projectDialog = document.querySelector('#projectdialog');
 const projectForm = document.querySelector('#projectForm');
 const submitProject = document.querySelector('#submitproject');
 let projectList = [];
-const todoList = [];
+
 
 
 

@@ -26,7 +26,7 @@ export  function renderProjects(projectList) {
             const emptymsg = document.createElement('p');
             emptymsg.textContent = 'No tasks yet';
             emptymsg.style.fontStyle = 'italic';
-            emptymsg.style.color = '#888';
+            emptymsg.style.color = '#888546';
             projectDiv.appendChild(emptymsg);
             container.appendChild(projectDiv);
             return;
@@ -45,7 +45,7 @@ export  function renderProjects(projectList) {
             taskLi.innerHTML = `
             <strong>${task.text}</strong>
             <small style="display: block; color: #666;">
-            Priority: ${task.priority} | due: ${task.date || 'no due date'}
+            Priority: ${task.priority} | due: ${task.date}
             </small> 
             `;
 
