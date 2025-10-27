@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script defer src="main.js"></script></head>
+<body>
+  <h2>To do list</h2>
+   <div id="projectContainer">
+    
+  </div>
+   
+  <button id="projectbutton">Create New Project</button>
+  <button id="add"> + </button>
+  
+  
+
+  <dialog id="taskdialog">
+        <form action="" id="taskForm">
+            <div class="closediv">
+                <button id="cancelForm" type="submit">x</button>
+            </div>
+            <textarea name="text" id="text" placeholder="enter your task" required></textarea>
+            <label for="">Priority</label>
+            <select name="priority" id="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            
+            <label for="date">Due date</label>
+            <input type="date" id="date" name="dueDate">
+            
+            <label for="projectSelect"> Add to Project:</label>
+            <select id="projectSelect" name="projectSelect">
+            <option value=""> --Select a Project --</option>
+            </select>
+
+            <button id="submitForm" type="submit">Add</button>
+        </form>
+        
+    </dialog>
+
+    <dialog id="projectdialog">
+        <form action="" id="projectForm">
+            <div class="closediv">
+                <button id="closeForm" type="submit" >x</button>
+            </div>
+            <input type="text " name="title" placeholder="enter project title">
+            <button id="submitproject">Add</button>
+        </form>
+        
+    </dialog>
+    
+    
+</body>
+</html>
