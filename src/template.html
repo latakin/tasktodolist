@@ -5,50 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-  <h2>To do list</h2>
-   <div id="projectContainer">
+<body class="text-center font-monospace">
+  <h2 class="fs-1 fw-bold mb-5 mt-2">To do list</h2>
+   <div id="projectContainer" class="container">
     
   </div>
    
-  <button id="projectbutton">Create New Project</button>
+  <button id="projectbutton" class="btn btn-primary">Create New Project</button>
   <button id="add"> + </button>
   
   
 
-  <dialog id="taskdialog">
+  <dialog id="taskdialog" class="container">
+        <div class="closediv">
+                <button  id="cancelForm" type="submit">x</button>
+        </div>
         <form action="" id="taskForm">
-            <div class="closediv">
-                <button id="cancelForm" type="submit">x</button>
+            <div class="row mb-3">
+                <label for="" class="col-sm-4 col-form-label">Task</label>
+                <div class="col-sm-6">
+                    <textarea name="text" id="text" class="form-control" placeholder="enter your task" required></textarea>
+                </div>
+                
             </div>
-            <textarea name="text" id="text" placeholder="enter your task" required></textarea>
-            <label for="">Priority</label>
-            <select name="priority" id="priority">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
             
-            <label for="date">Due date</label>
-            <input type="date" id="date" name="dueDate">
+            <div class="row mb-3">
+                <label for="" class="col-sm-4 col-form-label">Priority</label>
+                <div class="col-sm-6">
+                    <select name="priority" id="priority" class="form-select">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                
+            </div>
             
-            <label for="projectSelect"> Add to Project:</label>
-            <select id="projectSelect" name="projectSelect">
-            <option value=""> --Select a Project --</option>
-            </select>
-
-            <button id="submitForm" type="submit">Add</button>
+            <div class="row mb-3">
+                <label for="date" class="col-form-label col-sm-4">Due date</label>
+                <div class="col-sm-6">
+                    <input type="date" id="date" class="form-control" name="dueDate">
+                </div>
+                
+            </div>
+            
+            <div class=" row mb-3">
+                <label for="projectSelect" class="col-sm-4 col-form-label"> Add to Project:</label>
+                <div class="col-sm-6">
+                    <select id="projectSelect" name="projectSelect" class="form-select">
+                        <option value=""> --Select a Project --</option>
+                    </select>
+                </div>
+                
+            </div>
+            
+            <div class="col-12">
+                <button id="submitForm" type="submit" class="btn btn-primary">Add</button>
+            </div>
+            
         </form>
         
     </dialog>
 
-    <dialog id="projectdialog">
+    <dialog id="projectdialog" class="container">
+        <div class="closediv">
+            <button id="closeForm" type="submit" >x</button>
+        </div>
         <form action="" id="projectForm">
-            <div class="closediv">
-                <button id="closeForm" type="submit" >x</button>
+            <div class="row mb-3">
+                <label for="" class="col-sm-2 col-form-label">Title</label>
+                <div class="col-sm-6">
+                    <input type="text " name="title" class="form-control" placeholder="enter project title">
+                </div>
+                
             </div>
-            <input type="text " name="title" placeholder="enter project title">
-            <button id="submitproject">Add</button>
+            
+            <div class="col-12">
+                <button id="submitproject" class="btn btn-primary">Add</button>
+            </div>
+            
         </form>
         
     </dialog>

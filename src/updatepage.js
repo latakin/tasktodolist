@@ -1,6 +1,7 @@
 
 export  function renderProjects(projectList) {
     const container = document.querySelector('#projectContainer');
+    
     if (!container) {
         console.error('no projectscontainer found')
         return;
@@ -13,11 +14,13 @@ export  function renderProjects(projectList) {
         //create project wrapper div
         const projectDiv = document.createElement('div');
         projectDiv.className = 'project';
+        projectDiv.classList.add('border', 'border-2', 'rounded-end', 'text-start')
         projectDiv.setAttribute('data-project-id', index);
 
         //project header with title and tsk count
 
         const header = document.createElement('h3');
+        header.classList.add('fs-2', 'text-center')
         header.textContent = `${project.title} (${project.tasklist.length} tasks)`;
         projectDiv.appendChild(header);
 
@@ -25,8 +28,10 @@ export  function renderProjects(projectList) {
         if (project.tasklist.length === 0) {
             const emptymsg = document.createElement('p');
             emptymsg.textContent = 'No tasks yet';
+            emptymsg.classList.add('text-start');
             emptymsg.style.fontStyle = 'italic';
             emptymsg.style.color = '#888546';
+           
             projectDiv.appendChild(emptymsg);
             container.appendChild(projectDiv);
             return;
@@ -35,14 +40,17 @@ export  function renderProjects(projectList) {
         //create task list
         const taskUl = document.createElement('ul');
         taskUl.className = 'task-list';
+        
 
         //loop over tasks in current project
         project.tasklist.forEach((task) => {
             const taskLi = document.createElement('li');
+            const listDiv = document.createElement('div');
+            listDiv.classList.add('px-5', 'py-2','border', 'border-bottom', 'bg-dark-subtle', 'text-dangeremphasis');
             taskLi.className = `task priority-${task.priority}` //for css syling
 
             //Task details
-            taskLi.innerHTML = `
+            listDiv.innerHTML = `
             <strong>${task.text}</strong>
             <small style="display: block; color: #666;">
             Priority: ${task.priority} | due: ${task.date}
@@ -52,14 +60,17 @@ export  function renderProjects(projectList) {
             //complete button 
             const completeBtn = document.createElement('button');
             completeBtn.textContent = 'Complete';
+
             completeBtn.className = 'complete-Btn';
+            completeBtn.classList.add('btn', 'btn-success');
             completeBtn.addEventListener('click', () => {
                 taskLi.style.textDecoration = 'line-through';
                 taskLi.style.opacity = '0.5';
                 completeBtn.textContent = 'Completed';
                 completeBtn.disabled = true;
             })
-            taskLi.appendChild(completeBtn);
+            listDiv.appendChild(completeBtn);
+            taskLi.appendChild(listDiv);
             taskUl.appendChild(taskLi);
         });
         projectDiv.appendChild(taskUl);
