@@ -87,10 +87,12 @@ export  function renderProjects(projectList) {
 
                 if (taskIndex > -1) {
                 projectList[projectIndex].tasklist.splice(taskIndex, 1);
-                renderProjects(projectList); // re-render updated list
+                
                 } else {
                 console.error('Task not found');
                 }
+                localStorage.setItem('projectList', JSON.stringify(projectList));
+                renderProjects(projectList); // re-render updated list
             });
 
             

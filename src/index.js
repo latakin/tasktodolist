@@ -22,8 +22,22 @@ export let projectList = [];
 
 
 
-const myProject = new Project( "Default Project");
-projectList.push(myProject);
+
+
+
+const saved = JSON.parse(localStorage.getItem('projectList'));
+if (saved && Array.isArray(saved)) {
+    // Rehydrate plain objects into Project/Todo instances
+    projectList = saved.map(p => {
+        const proj = new Project(p.title);
+        proj.tasklist = (p.tasklist || []).map(t => new Todo(t.text, t.priority, t.date));
+        return proj;
+    });
+} else {
+    const myProject = new Project("Default Project");
+    projectList.push(myProject);
+    localStorage.setItem('projectList', JSON.stringify(projectList));
+}
 
 
 projectButton.addEventListener('click', () => projectDialog.showModal());
@@ -66,8 +80,10 @@ submitProject.addEventListener ('click', (event) => {
     if (projectForm.checkValidity() ) {
 
         const newProject = new Project(title);
+        localStorage.setItem('task', JSON.stringify(newProject));
         console.log(newProject);
         projectList.push(newProject);
+        localStorage.setItem('projectList', JSON.stringify(projectList));
         renderProjects(projectList)
         projectForm.reset();
         projectDialog.close();
@@ -105,6 +121,7 @@ submitForm.addEventListener('click', (event) => {
          const newTask = new Todo (text, priority, dueDate);
         console.log(newTask)
         selectedProject.addProject(newTask);
+        localStorage.setItem('projectList', JSON.stringify(projectList));
         renderProjects(projectList);
         taskForm.reset();
         dialog.close();   
