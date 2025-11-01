@@ -2,8 +2,8 @@ import { Todo } from "./todoclass.js";
 
 export class Project {
 
-    constructor(id = Math.floor(Math.random() * 1000), title, tasklist = []) {
-        this.id = id
+    constructor(title, tasklist = []) {
+        this.id = crypto.randomUUID();
         this.title = title;
         this.tasklist = tasklist;
     }

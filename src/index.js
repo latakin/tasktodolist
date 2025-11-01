@@ -16,13 +16,13 @@ const projectButton= document.querySelector('#projectbutton');
 const projectDialog = document.querySelector('#projectdialog');
 const projectForm = document.querySelector('#projectForm');
 const submitProject = document.querySelector('#submitproject');
-const delButton = document.querySelector('.delButton');
-let projectList = [];
+
+export let projectList = [];
 
 
 
 
-const myProject = new Project("Default Project");
+const myProject = new Project( "Default Project");
 projectList.push(myProject);
 
 
@@ -120,12 +120,4 @@ submitForm.addEventListener('click', (event) => {
 
 renderProjects(projectList);
 
- //delete button
-             
-             delButton.classList.add('d-inline-block');
-              delButton.addEventListener('click', () => {
-                const indexLi = project.tasklist.indexOf(taskLi);
-                project.tasklist.splice(indexLi, 1);
-                renderProjects(projectList)
-
-             })               
+ //delete button   

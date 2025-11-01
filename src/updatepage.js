@@ -1,4 +1,5 @@
 
+
 export  function renderProjects(projectList) {
     const container = document.querySelector('#projectContainer');
     
@@ -17,7 +18,7 @@ export  function renderProjects(projectList) {
         //create project wrapper div
         const projectDiv = document.createElement('div');
         projectDiv.className = 'project';
-        projectDiv.classList.add('border', 'border-2', 'rounded-end', 'text-start')
+        projectDiv.classList.add('border', 'border-2', 'rounded-end', 'text-start');
         projectDiv.setAttribute('data-project-id', index);
 
         //project header with title and tsk count
@@ -46,7 +47,7 @@ export  function renderProjects(projectList) {
         
 
         //loop over tasks in current project
-        project.tasklist.forEach((task, taskIndex) => {
+        project.tasklist.forEach((task) => {
             const taskLi = document.createElement('li');
             const listDiv = document.createElement('div');
             const editDiv = document.createElement('div');
@@ -75,12 +76,37 @@ export  function renderProjects(projectList) {
             </svg>
             `;
 
-           
+            //delete button
+            const delButton = listDiv.querySelector('.delButton');
+            delButton.classList.add('d-inline-block','me-3');
+
              
+            delButton.addEventListener('click', () => {
+                const projectIndex = index; // from the forEach
+                const taskIndex = project.tasklist.indexOf(task);
+
+                if (taskIndex > -1) {
+                projectList[projectIndex].tasklist.splice(taskIndex, 1);
+                renderProjects(projectList); // re-render updated list
+                } else {
+                console.error('Task not found');
+                }
+            });
+
+            
 
              //editbtn
-             const editBtn = document.querySelector('.editBtn');
-             editBtn.classList.add('d-inline-block','me-3');
+             const editBtn = listDiv.querySelector('.editBtn');
+             editBtn.classList.add('d-inline-block', 'me-3')
+                editBtn.addEventListener('click', () => {
+                const newText = prompt('Edit task:', task.text);
+                if (newText) {
+                    task.text = newText;
+                    renderProjects(projectList);
+                    }
+                });
+
+             
 
             //complete button 
             const completeBtn = document.createElement('button');
@@ -95,8 +121,8 @@ export  function renderProjects(projectList) {
                 completeBtn.disabled = true;
             })
             editDiv.appendChild(completeBtn);
-            editDiv.appendChild(editBtn);
-            editDiv.appendChild(delButton);
+            //editDiv.appendChild(editBtn);
+            //editDiv.appendChild(delButton);
 
             listDiv.appendChild(editDiv);
             taskLi.appendChild(listDiv);
