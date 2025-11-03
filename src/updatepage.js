@@ -1,62 +1,93 @@
+import { Project } from "./project";
+export function renderProjects(projectList) {
+  const container = document.querySelector("#projectContainer");
 
+  if (!container) {
+    console.error("no projectscontainer found");
+    return;
+  }
+  //clear existing content
+  container.innerHTML = "";
 
-export  function renderProjects(projectList) {
-    const container = document.querySelector('#projectContainer');
-    
-    
-    if (!container) {
-        console.error('no projectscontainer found')
-        return;
+  //loop over each project
+  projectList.forEach((project, index) => {
+    //create project wrapper div
+    const projectDiv = document.createElement("div");
+    projectDiv.className = "project";
+    projectDiv.classList.add("border", "border-2", "rounded-end", "text-start");
+    projectDiv.setAttribute("data-project-id", index);
+
+    //project header with title and tsk count
+
+    const header = document.createElement("h3");
+    header.classList.add("fs-2", "text-center");
+    header.textContent = `${project.title} (${project.tasklist.length} tasks)`;
+    projectDiv.appendChild(header);
+
+    //delete button
+    const delProject = document.createElement("button");
+    delProject.textContent = "Delete Project";
+    delProject.classList.add("btn", "btn-danger", "me-5");
+    projectDiv.appendChild(delProject);
+
+    delProject.addEventListener("click", () => {
+      function confirmDel() {
+        const delDialog = document.getElementById("confirmDel");
+        const proceed = document.getElementById("goAhead");
+        const dntProceed = document.getElementById("goBack");
+
+        delDialog.showModal();
+
+        proceed.addEventListener("click", () => {
+          projectList.splice(index, 1);
+          localStorage.setItem("projectList", JSON.stringify(projectList));
+          renderProjects(projectList);
+          delDialog.close();
+        });
+
+        dntProceed.addEventListener("click", () => {
+          delDialog.close();
+        });
+      }
+
+      confirmDel();
+    });
+
+    //if no tasks, show placeholder
+    if (project.tasklist.length === 0) {
+      const emptymsg = document.createElement("p");
+      emptymsg.textContent = "No tasks yet, create one with the + button";
+      emptymsg.classList.add("text-start", "my-3");
+      emptymsg.style.fontStyle = "italic";
+      emptymsg.style.color = "#888546";
+
+      projectDiv.appendChild(emptymsg);
+      container.appendChild(projectDiv);
+      return;
     }
-    //clear existing content
-    container.innerHTML = '';
 
-    //loop over each project
-    projectList.forEach((project,index) => {
+    //create task list
+    const taskUl = document.createElement("ul");
+    taskUl.className = "task-list";
 
-                
-        //create project wrapper div
-        const projectDiv = document.createElement('div');
-        projectDiv.className = 'project';
-        projectDiv.classList.add('border', 'border-2', 'rounded-end', 'text-start');
-        projectDiv.setAttribute('data-project-id', index);
+    //loop over tasks in current project
+    project.tasklist.forEach((task) => {
+      const taskLi = document.createElement("li");
+      const listDiv = document.createElement("div");
+      const editDiv = document.createElement("div");
 
-        //project header with title and tsk count
+      listDiv.classList.add(
+        "px-5",
+        "py-2",
+        "border",
+        "border-bottom",
+        "bg-dark-subtle",
+        "text-dangeremphasis"
+      );
+      taskLi.className = `task priority-${task.priority}`; //for css syling
 
-        const header = document.createElement('h3');
-        header.classList.add('fs-2', 'text-center')
-        header.textContent = `${project.title} (${project.tasklist.length} tasks)`;
-        projectDiv.appendChild(header);
-
-        //if no tasks, show placeholder
-        if (project.tasklist.length === 0) {
-            const emptymsg = document.createElement('p');
-            emptymsg.textContent = 'No tasks yet';
-            emptymsg.classList.add('text-start');
-            emptymsg.style.fontStyle = 'italic';
-            emptymsg.style.color = '#888546';
-           
-            projectDiv.appendChild(emptymsg);
-            container.appendChild(projectDiv);
-            return;
-        }
-
-        //create task list
-        const taskUl = document.createElement('ul');
-        taskUl.className = 'task-list';
-        
-
-        //loop over tasks in current project
-        project.tasklist.forEach((task) => {
-            const taskLi = document.createElement('li');
-            const listDiv = document.createElement('div');
-            const editDiv = document.createElement('div');
-           
-            listDiv.classList.add('px-5', 'py-2','border', 'border-bottom', 'bg-dark-subtle', 'text-dangeremphasis');
-            taskLi.className = `task priority-${task.priority}` //for css syling
-
-            //Task details
-            listDiv.innerHTML = `
+      //Task details
+      listDiv.innerHTML = `
             <strong>${task.text}</strong>
             <small style="display: block; color: #666;">
             Priority: ${task.priority} | due: ${task.date}
@@ -76,74 +107,83 @@ export  function renderProjects(projectList) {
             </svg>
             `;
 
-            //delete button
-            const delButton = listDiv.querySelector('.delButton');
-            delButton.classList.add('d-inline-block','me-3');
+      //delete button
+      const delButton = listDiv.querySelector(".delButton");
+      delButton.classList.add("d-inline-block", "me-3"), "my-2";
 
-             
-            delButton.addEventListener('click', () => {
-                const projectIndex = index; // from the forEach
-                const taskIndex = project.tasklist.indexOf(task);
+      delButton.addEventListener("click", () => {
+        const projectIndex = index; // from the forEach
+        const taskIndex = project.tasklist.indexOf(task);
 
-                if (taskIndex > -1) {
-                projectList[projectIndex].tasklist.splice(taskIndex, 1);
-                
-                } else {
-                console.error('Task not found');
-                }
-                localStorage.setItem('projectList', JSON.stringify(projectList));
-                renderProjects(projectList); // re-render updated list
+        if (taskIndex > -1) {
+          function confirmDel() {
+            const delDialog = document.getElementById("confirmDel");
+            const proceed = document.getElementById("goAhead");
+            const dntProceed = document.getElementById("goBack");
+
+            delDialog.showModal();
+
+            proceed.addEventListener("click", () => {
+              projectList[projectIndex].tasklist.splice(index, 1);
+              localStorage.setItem("projectList", JSON.stringify(projectList));
+              renderProjects(projectList); // re-render updated list
+              delDialog.close();
             });
 
-            
+            dntProceed.addEventListener("click", () => {
+              delDialog.close();
+            });
+          }
 
-             //editbtn
-             const editBtn = listDiv.querySelector('.editBtn');
-             editBtn.classList.add('d-inline-block', 'me-3')
-                editBtn.addEventListener('click', () => {
-                const newText = prompt('Edit task:', task.text);
-                if (newText) {
-                    task.text = newText;
-                    renderProjects(projectList);
-                    }
-                });
+          confirmDel();
+        } else {
+          console.error("Task not found");
+        }
+      });
 
-             
+      //editbtn
+      const editBtn = listDiv.querySelector(".editBtn");
+      editBtn.classList.add("d-inline-block", "me-3", "my-2");
+      editBtn.addEventListener("click", () => {
+        const newText = prompt("Edit task:", task.text);
+        if (newText) {
+          task.text = newText;
+          renderProjects(projectList);
+        }
+      });
 
-            //complete button 
-            const completeBtn = document.createElement('button');
-            completeBtn.textContent = 'Complete';
+      //complete button
+      const completeBtn = document.createElement("button");
+      completeBtn.textContent = "Complete";
 
-            completeBtn.className = 'complete-Btn';
-            completeBtn.classList.add('btn', 'btn-success', 'me-5');
-            completeBtn.addEventListener('click', () => {
-                taskLi.style.textDecoration = 'line-through';
-                taskLi.style.opacity = '0.5';
-                completeBtn.textContent = 'Completed';
-                completeBtn.disabled = true;
-            })
-            editDiv.appendChild(completeBtn);
-            //editDiv.appendChild(editBtn);
-            //editDiv.appendChild(delButton);
+      completeBtn.className = "complete-Btn";
+      completeBtn.classList.add("btn", "btn-success", "me-5", "my-2");
+      completeBtn.addEventListener("click", () => {
+        taskLi.style.textDecoration = "line-through";
+        taskLi.style.opacity = "0.5";
+        completeBtn.textContent = "Completed";
+        completeBtn.disabled = true;
+      });
+      editDiv.appendChild(completeBtn);
+      //editDiv.appendChild(editBtn);
+      //editDiv.appendChild(delButton);
 
-            listDiv.appendChild(editDiv);
-            taskLi.appendChild(listDiv);
-            taskUl.appendChild(taskLi);
-        });
-        projectDiv.appendChild(taskUl);
-        container.appendChild(projectDiv);
+      listDiv.appendChild(editDiv);
+      taskLi.appendChild(listDiv);
+      taskUl.appendChild(taskLi);
     });
+    projectDiv.appendChild(taskUl);
+    container.appendChild(projectDiv);
+  });
 
-    //if no projects
-    if (projectList.length === 0) {
-        const noProjects = document.createElement('p');
-        noProjects.textContent = 'no projects yet, create one to get started';
-        noProjects.style.textAlign = 'center';
-        noProjects.style.color = '#888';
-        container.appendChild(noProjects);
-    }
+  //if no projects
+  if (projectList.length === 0) {
+    const noProjects = document.createElement("p");
+    noProjects.textContent = "no projects yet, create one to get started";
+    noProjects.style.textAlign = "center";
+    noProjects.style.color = "#888";
+    container.appendChild(noProjects);
+  }
 
-    
-
-    console.log('rendered projects:', projectList)
+  console.log("rendered projects:", projectList);
 }
