@@ -20,7 +20,7 @@ export function renderProjects(projectList) {
     //project header with title and tsk count
 
     const header = document.createElement("h3");
-    header.classList.add("fs-2", "text-center");
+    header.classList.add("fs-2", "text-center", "project-header");
     header.textContent = `${project.title} (${project.tasklist.length} tasks)`;
     projectDiv.appendChild(header);
 
