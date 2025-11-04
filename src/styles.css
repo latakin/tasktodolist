@@ -1,8 +1,16 @@
 /* styles.css */
+html, body {
+   height: 100%;
+   margin: 0;
+}
 body {
-   position: relative;
+   
+   display: flex;
+   flex-direction: column;
   background-color: rebeccapurple;
   text-align: center;
+  min-height: 100vh;
+  
 }
  h2 {
     color: white;
@@ -121,18 +129,20 @@ dialog {
  }
  .project-header {
    background-color: rgba(128, 0, 128, 0.9);
+   color: white;
    
    
  }
 main {
    background-color: #fdfdfd;
+   padding: 10px;
+   flex: 1;
 }
  footer {
    padding: 20px;
    background-color: purple;
    color: white;
    text-align: center;
-   position: absolute;
-   bottom: 0;
    width: 100%;
+   margin-top: 10px;
  }

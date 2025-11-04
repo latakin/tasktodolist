@@ -73,12 +73,14 @@ export function renderProjects(projectList) {
     //loop over tasks in current project
     project.tasklist.forEach((task) => {
       const taskLi = document.createElement("li");
+     
       const listDiv = document.createElement("div");
       const editDiv = document.createElement("div");
 
       listDiv.classList.add(
         "px-5",
         "py-2",
+        "my-2",
         "border",
         "border-bottom",
         "bg-dark-subtle",
